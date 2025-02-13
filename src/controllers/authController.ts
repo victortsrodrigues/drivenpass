@@ -10,8 +10,15 @@ export async function signUp(req: Request, res: Response) {
   res.sendStatus(httpStatus.CREATED);
 }
 
+export async function signIn(req: Request, res: Response) {
+  const body = req.body as BodySignIn;
+  const token = await authServices.signIn(body);
+  res.status(httpStatus.OK).send(token);
+}
+
 const authController = {
   signUp,
+  signIn,
 };
 
 export default authController;
