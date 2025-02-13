@@ -1,6 +1,9 @@
 import express, { json, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import "express-async-errors";
+import errorHandler from "./middlewares/errorHandlerMiddleware";
+import authRouter from "./routers/authRouter";
 
 // Load environment variables
 dotenv.config();
@@ -18,7 +21,8 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 // Routes
-
+app.use(authRouter);
+app.use(errorHandler);
 
 // Start server
 const port: Number = Number(process.env.PORT) || 5000;
