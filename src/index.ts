@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import "express-async-errors";
 import errorHandler from "./middlewares/errorHandlerMiddleware";
 import authRouter from "./routers/authRouter";
+import credentialsRouter from "./routers/credentialsRouter";
 
 // Load environment variables
 dotenv.config();
@@ -22,6 +23,7 @@ app.get("/health", (req: Request, res: Response) => {
 
 // Routes
 app.use(authRouter);
+app.use(credentialsRouter);
 app.use(errorHandler);
 
 // Start server

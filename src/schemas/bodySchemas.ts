@@ -40,8 +40,7 @@ export const credentialSchema = joi.object<BodyCredential>({
     "string.min": "Title must have at least 2 characters",
     "any.required": "Title is required",
   }),
-  url: joi.string().trim().uri().required().messages({
-    "string.uri": "Please provide a valid URL",
+  url: joi.string().trim().required().messages({
     "string.empty": "URL cannot be empty",
     "any.required": "URL is required",
   }),
