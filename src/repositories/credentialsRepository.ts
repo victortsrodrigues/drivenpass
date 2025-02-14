@@ -74,14 +74,6 @@ async function deleteCredential(id: number, user_id: number) {
   });
 }
 
-async function deleteAllCredentials(user_id: number) {
-  return await prisma.credential.deleteMany({
-    where: {
-      user_id: user_id,
-    },
-  });
-}
-
 const credentialsRepository = {
   findCredentialByTitleAndId,
   createCredential,
@@ -89,7 +81,6 @@ const credentialsRepository = {
   getCredentialById,
   updateCredential,
   deleteCredential,
-  deleteAllCredentials,
 };
 
 export default credentialsRepository;

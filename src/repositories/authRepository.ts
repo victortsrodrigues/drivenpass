@@ -19,6 +19,7 @@ async function insertUser(name: string, email: string, password: string) {
     },
   });
 }
+
 const authRepository = {
   findByEmail,
   insertUser,

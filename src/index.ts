@@ -5,6 +5,7 @@ import "express-async-errors";
 import errorHandler from "./middlewares/errorHandlerMiddleware";
 import authRouter from "./routers/authRouter";
 import credentialsRouter from "./routers/credentialsRouter";
+import userRouter from "./routers/userRouter";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.get("/health", (req: Request, res: Response) => {
 // Routes
 app.use(authRouter);
 app.use(credentialsRouter);
+app.use(userRouter);
 app.use(errorHandler);
 
 const port: Number = Number(process.env.PORT) || 5000;
