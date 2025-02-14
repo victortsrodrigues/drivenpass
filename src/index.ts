@@ -6,10 +6,8 @@ import errorHandler from "./middlewares/errorHandlerMiddleware";
 import authRouter from "./routers/authRouter";
 import credentialsRouter from "./routers/credentialsRouter";
 
-// Load environment variables
 dotenv.config();
 
-// Create Express app
 const app = express();
 
 // Middleware
@@ -26,7 +24,6 @@ app.use(authRouter);
 app.use(credentialsRouter);
 app.use(errorHandler);
 
-// Start server
 const port: Number = Number(process.env.PORT) || 5000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
