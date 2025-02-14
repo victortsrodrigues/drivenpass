@@ -14,13 +14,7 @@ async function createCredential(body: BodyCredential, userId: number) {
 
   const hashedPassword = cryptr.encrypt(body.password);
 
-  const credential = await credentialsRepository.createCredential(
-    body,
-    userId,
-    hashedPassword
-  );
-  
-  return credential;
+  await credentialsRepository.createCredential(body, userId, hashedPassword);
 }
 
 async function getCredentials(user_id: number) {
@@ -35,13 +29,16 @@ async function getCredentials(user_id: number) {
   return decryptedCredentials;
 }
 
-async function getCredentialsById(id: string, user_id: number) {
+async function getCredentialById(id: string, user_id: number) {
   if (isNaN(Number(id))) throw badRequestError("Id");
   if (Number(id) <= 0) throw badRequestError("Id");
 
-  const credential = await credentialsRepository.getCredentialsById(Number(id), user_id);
+  const credential = await credentialsRepository.getCredentialById(
+    Number(id),
+    user_id
+  );
   if (!credential) throw notFoundError("Credential");
-  
+
   const decryptedCredential = {
     ...credential,
     password: cryptr.decrypt(credential.password),
@@ -50,10 +47,49 @@ async function getCredentialsById(id: string, user_id: number) {
   return decryptedCredential;
 }
 
+async function updateCredential(
+  id: string,
+  body: BodyCredential,
+  user_id: number
+) {
+  if (isNaN(Number(id))) throw badRequestError("Id");
+  if (Number(id) <= 0) throw badRequestError("Id");
+
+  const credential = await credentialsRepository.getCredentialById(
+    Number(id),
+    user_id
+  );
+  if (!credential) throw notFoundError("Credential");
+
+  const hashedPassword = cryptr.encrypt(body.password);
+
+  await credentialsRepository.updateCredential(
+    Number(id),
+    body,
+    user_id,
+    hashedPassword
+  );
+}
+
+async function deleteCredential(id: string, user_id: number) {
+  if (isNaN(Number(id))) throw badRequestError("Id");
+  if (Number(id) <= 0) throw badRequestError("Id");
+
+  const credential = await credentialsRepository.getCredentialById(
+    Number(id),
+    user_id
+  );
+  if (!credential) throw notFoundError("Credential");
+
+  await credentialsRepository.deleteCredential(Number(id), user_id);
+}
+
 const credentialsServices = {
   createCredential,
   getCredentials,
-  getCredentialsById,
+  getCredentialById,
+  updateCredential,
+  deleteCredential,
 };
 
 export default credentialsServices;

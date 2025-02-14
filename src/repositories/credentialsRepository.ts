@@ -35,10 +35,48 @@ async function getCredentials(user_id: number) {
   });
 }
 
-async function getCredentialsById(id: number, user_id: number) {
+async function getCredentialById(id: number, user_id: number) {
   return await prisma.credential.findFirst({
     where: {
       id: id,
+      user_id: user_id,
+    },
+  });
+}
+
+async function updateCredential(
+  id: number,
+  body: BodyCredential,
+  user_id: number,
+  hashedPassword: string
+) {
+  const { title, url, username } = body;
+  return await prisma.credential.update({
+    where: {
+      id: id,
+      user_id: user_id,
+    },
+    data: {
+      title: title,
+      url: url,
+      username: username,
+      password: hashedPassword,
+    },
+  });
+}
+
+async function deleteCredential(id: number, user_id: number) {
+  return await prisma.credential.delete({
+    where: {
+      id: id,
+      user_id: user_id,
+    },
+  });
+}
+
+async function deleteAllCredentials(user_id: number) {
+  return await prisma.credential.deleteMany({
+    where: {
       user_id: user_id,
     },
   });
@@ -48,7 +86,10 @@ const credentialsRepository = {
   findCredentialByTitleAndId,
   createCredential,
   getCredentials,
-  getCredentialsById,
+  getCredentialById,
+  updateCredential,
+  deleteCredential,
+  deleteAllCredentials,
 };
 
 export default credentialsRepository;

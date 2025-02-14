@@ -13,21 +13,37 @@ async function createCredential(req: Request, res: Response) {
 async function getCredentials(req: Request, res: Response) {
   const userId: number = res.locals.userId;
   const credentials = await credentialsServices.getCredentials(userId);
-  console.log(credentials);
   res.status(httpStatus.OK).send(credentials);
 }
 
-async function getCredentialsById(req: Request, res: Response) {
+async function getCredentialById(req: Request, res: Response) {
   const userId: number = res.locals.userId;
   const { id } = req.params;
-  const credential = await credentialsServices.getCredentialsById(id, userId);
+  const credential = await credentialsServices.getCredentialById(id, userId);
   res.status(httpStatus.OK).send(credential);
+}
+
+async function updateCredential(req: Request, res: Response) {
+  const userId: number = res.locals.userId;
+  const { id } = req.params;
+  const body = req.body as BodyCredential;
+  await credentialsServices.updateCredential(id, body, userId);
+  res.sendStatus(httpStatus.NO_CONTENT);
+}
+
+async function deleteCredential(req: Request, res: Response) {
+  const userId: number = res.locals.userId;
+  const { id } = req.params;
+  await credentialsServices.deleteCredential(id, userId);
+  res.sendStatus(httpStatus.NO_CONTENT);
 }
 
 const credentialsController = {
   createCredential,
   getCredentials,
-  getCredentialsById,
+  getCredentialById,
+  updateCredential,
+  deleteCredential,
 };
 
 export default credentialsController;
