@@ -26,7 +26,4 @@ app.use(credentialsRouter);
 app.use(userRouter);
 app.use(errorHandler);
 
-const port: Number = Number(process.env.PORT) || 5000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+export default app;
