@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres
+    container_name: mypostgres
+    ports:
+      - 5433:5432
+    networks:
+      - mynetwork
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: drivenpass
+    volumes:
+      - myvolume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -d postgres -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  backend:
+    image: victortsrodrigues/drivenpass
+    container_name: drivenpass
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/drivenpass?schema=public
+      JWT_SECRET: e3bd44f1-3b72-4791-bb1d-51637bc10e86
+      CRYPTR_SECRET: b625f794-f0b8-47da-b559-f4a8d8b66bbc
+      PORT: 5000
+    networks:
+      - mynetwork
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+networks:
+  mynetwork:
+    name: mynetwork
+
+volumes:
+  myvolume:
