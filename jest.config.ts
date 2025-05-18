@@ -5,7 +5,7 @@ module.exports = {
   transform: {
     ".+\\.ts$": "ts-jest",
   },
-  testMatch: ["**/?(*.)+(unit|integration.test).ts"],
+  testMatch: ["**/?(*.)+(unit.test|integration.test).ts"],
   moduleFileExtensions: ["ts", "js", "json"],
   maxWorkers: 1,
 };

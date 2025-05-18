@@ -4,8 +4,10 @@ import { conflictError } from "../errors/conflictError";
 import credentialsRepository from "../repositories/credentialsRepository";
 import { notFoundError } from "../errors/notFoundError";
 import { badRequestError } from "../errors/badRequestError";
+import dotenv from "dotenv";
+dotenv.config();
 
-const cryptr = new Cryptr("myTotallySecretKey");
+const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
 
 async function createCredential(body: BodyCredential, userId: number) {
   const existingCredential =

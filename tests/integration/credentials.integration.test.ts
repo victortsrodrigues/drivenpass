@@ -5,7 +5,7 @@ import prisma from "../../src/database/database";
 import Cryptr from "cryptr";
 import { createUser, generateToken, generateCredential, createCredential } from "../factories/factory";
 
-export const cryptr = new Cryptr("myTotallySecretKey");
+export const cryptr = new Cryptr(process.env.CRYPTR_SECRET);
 const server = supertest(app);
 
 beforeEach(async () => {
