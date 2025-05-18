@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import httpStatus from "http-status";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { unauthorizedError } from "../errors/unauthorizedError";
