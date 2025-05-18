@@ -61,7 +61,7 @@ describe("POST /sign-up", () => {
 
   it("should return 422 when password is too short", async () => {
     const user = generateSignUpData();
-    user.password = "12345"; // Less than 6 charac
+    user.password = "12345"; // Less than 6 characters
 
     const response = await server.post("/sign-up").send(user);
     expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
