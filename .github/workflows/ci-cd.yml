@@ -1,0 +1,25 @@
+name: Pipeline Automatizado
+on:
+  push:
+    branches:
+      - main
+jobs:
+  CI-ContinuousIntegration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Make new a .env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_PORT: 5000
+          envkey_POSTGRES_PASSWORD: "postgres"
+          envkey_POSTGRES_USER: "postgres"
+          envkey_POSTGRES_DB: "tests"
+          envkey_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/tests"
+          envkey_JWT_SECRET: "e3bd44f1-3b72-4791-bb1d-51637bc10e86"
+          envkey_CRYPTR_SECRET: "b625f794-f0b8-47da-b559-f4a8d8b66bbc"
+          directory: .
+          file_name: .env.test
+      - name: Run tests
+        run: docker compose -f docker-compose-test.yml run backend npm run test:ci
