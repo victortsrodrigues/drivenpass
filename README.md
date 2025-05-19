@@ -204,3 +204,8 @@ To contribute:
 
 ## 🛡️ License
 MIT © [Victor Rodrigues](https://github.com/victortsrodrigues)
+
+---
+
+> Project developed for Driven – Module 21.
+> Demonstrates proficiency in Node.js, Express, TypeScript, PostgreSQL, Docker, CI/CD, error handling, API architecture, security best practices and more.
